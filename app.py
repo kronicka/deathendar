@@ -17,28 +17,6 @@ def calculate_days(*dob: int) -> int:
     return days_left
 
 
-# def generate_calendar_days(days: int):
-#     """ Generate a calendar based on the number of days """
-#     days += 1
-#     square_path = 'img/square.jpg'
-#     background_path = 'img/background.png'
-#     square_size = (50, 50)
-#     cols = 48
-#     rows = int(days / cols)
-#
-#     with Image.open(square_path) as square, Image.open(background_path) as background:
-#         print(background.format, background.size, background.mode)
-#         print(square.format, square.size)
-#         square = square.resize(square_size)
-#
-#         for row in range(0, rows):
-#             for col in range(0, cols):
-#                 box = (square.size[0] * col + 20, square_size[1] * row + 20)
-#                 background.paste(square, box)
-#
-#         background.show()
-
-
 # Actually relevant code starts here
 def calculate_weeks(*dob: int) -> int:
     average_life_expectancy = 3726      # actually about half a week above the average human life expectancy (71.5 yrs)
@@ -52,14 +30,14 @@ def calculate_weeks(*dob: int) -> int:
 def generate_calendar(weeks: int):
     """ Generate a calendar based on the number of weeks """
     # TODO: scale square pics based on the number of weeks
-    weeks += 1
     square_path = 'img/square.jpg'
     background_path = 'img/background.png'
 
     square_size = (50, 50)
     cols = 48
     padding = 40
-    rows = int(weeks / cols)
+    rows, leftover = divmod(weeks / cols, 1)
+    rows = int(rows) + 1
 
     with Image.open(square_path) as square, Image.open(background_path) as background:
         print(background.format, background.size, background.mode)
@@ -67,6 +45,9 @@ def generate_calendar(weeks: int):
         square = square.resize(square_size)
 
         for row in range(0, rows):
+            if row == rows - 1 and leftover != 0:
+                cols *= leftover
+                cols = int(cols)
             for col in range(0, cols):
                 box = (square.size[0] * col + padding, square_size[1] * row + padding)
                 background.paste(square, box)
@@ -75,5 +56,5 @@ def generate_calendar(weeks: int):
 
 
 if __name__ == '__main__':
-    weeks = calculate_weeks(1995, 4, 10)
+    weeks = calculate_weeks(1948, 1, 10)
     generate_calendar(weeks)
