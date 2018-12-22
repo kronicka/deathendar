@@ -1,15 +1,21 @@
-from PIL import Image
 from datetime import date
+from dateutil.parser import parse
+from PIL import Image
+from typing import Tuple
+
+# TODO: scale square pics based on the number of weeks
+# TODO: merge functionality for calculating days, weeks (and, maybe, months and years)
+# TODO: do more precise calculations by being specific (e.g., ask gender and location of birth)
 
 
 # Generating a calendar for days is less practical than weeks
 # I'm leaving this stuff in until I refactor it into a more generic function/class
 def calculate_days(*dob: int) -> int:
     """
-        Calculate number of days left to live based on date of birth
+        Calculate the number of days left to live based on date of birth
         NOTE: This function was a mistake, but just in case you want to know the number of days I'm leaving it in
     """
-    average_life_expectancy = 26098            # actually half a day above the average human life expectancy (71.5 yrs)
+    average_life_expectancy = 26097.5         # based on the average human life expectancy (~71.5 yrs)
 
     days_lived = abs(date.today() - date(*dob)).days
     days_left = average_life_expectancy - days_lived
@@ -18,8 +24,17 @@ def calculate_days(*dob: int) -> int:
 
 
 # Actually relevant code starts here
+def input_dob() -> Tuple[int, int, int]:
+    dob = input('Enter your date of birth (YYYY-MM-DD):\n')
+    dob = parse(dob)
+    return dob.year, dob.month, dob.day
+
+
 def calculate_weeks(*dob: int) -> int:
-    average_life_expectancy = 3726      # actually about half a week above the average human life expectancy (71.5 yrs)
+    """
+        Calculate the number of weeks left to live based on date of birth
+    """
+    average_life_expectancy = 3728.214        # based on the average human life expectancy (~71.5 yrs)
 
     weeks_lived = abs(date.today() - date(*dob)).days / 7
     weeks_left = average_life_expectancy - weeks_lived
@@ -28,8 +43,9 @@ def calculate_weeks(*dob: int) -> int:
 
 
 def generate_calendar(weeks: int):
-    """ Generate a calendar based on the number of weeks """
-    # TODO: scale square pics based on the number of weeks
+    """
+        Generate a calendar based on the number of weeks
+    """
     square_path = 'img/square.jpg'
     background_path = 'img/background.png'
 
@@ -56,5 +72,5 @@ def generate_calendar(weeks: int):
 
 
 if __name__ == '__main__':
-    weeks = calculate_weeks(1948, 1, 10)
+    weeks = calculate_weeks(*input_dob())
     generate_calendar(weeks)
