@@ -6,6 +6,19 @@ from typing import Tuple
 # TODO: scale square pics based on the number of weeks
 # TODO: merge functionality for calculating days, weeks (and, maybe, months and years)
 # TODO: do more precise calculations by being specific (e.g., ask gender and location of birth)
+# TODO: let the user pick a shape
+# TODO: separate methods into one class
+
+
+# Validators
+valid_f_sex = ['female', 'f', 'F', 'fem', 'she', 'woman']
+valid_m_sex = ['male', 'm', 'M', 'man', 'he']
+
+# Constants (2016 UN Data)
+general_life_expectancy_days = 26097.5
+general_life_expectancy_weeks = 3728.214        # ~71.5 years
+female_file_expectancy_weeks = 3872.18071       # ~74.261 years
+male_life_expectancy_weeks = 3647.54929         # ~69.953 years
 
 
 # Generating a calendar for days is less practical than weeks
@@ -15,29 +28,43 @@ def calculate_days(*dob: int) -> int:
         Calculate the number of days left to live based on date of birth
         NOTE: This function was a mistake, but just in case you want to know the number of days I'm leaving it in
     """
-    average_life_expectancy = 26097.5         # based on the average human life expectancy (~71.5 yrs)
-
     days_lived = abs(date.today() - date(*dob)).days
-    days_left = average_life_expectancy - days_lived
+    days_left = general_life_expectancy_days - days_lived
 
     return days_left
 
 
 # Actually relevant code starts here
 def input_dob() -> Tuple[int, int, int]:
+    """
+        Input and validate date of birth
+    """
     dob = input('Enter your date of birth (YYYY-MM-DD):\n')
     dob = parse(dob)
     return dob.year, dob.month, dob.day
 
 
-def calculate_weeks(*dob: int) -> int:
+def input_sex() -> bool:
+    """
+        Input and validate biological sex
+    """
+    while True:
+        sex = input('Enter your biological sex (m/f):\n')
+        if sex in valid_f_sex:
+            return True
+        elif sex in valid_m_sex:
+            return False
+        else:
+            continue
+
+
+def calculate_weeks(sex: bool, *dob: int) -> int:
     """
         Calculate the number of weeks left to live based on date of birth
     """
-    average_life_expectancy = 3728.214        # based on the average human life expectancy (~71.5 yrs)
-
     weeks_lived = abs(date.today() - date(*dob)).days / 7
-    weeks_left = average_life_expectancy - weeks_lived
+    weeks_left = (female_file_expectancy_weeks if sex else male_life_expectancy_weeks) - weeks_lived
+    print(weeks_left)
 
     return int(weeks_left)
 
@@ -72,5 +99,7 @@ def generate_calendar(weeks: int):
 
 
 if __name__ == '__main__':
-    weeks = calculate_weeks(*input_dob())
+    dob = input_dob()
+    sex = input_sex()
+    weeks = calculate_weeks(sex, *dob)
     generate_calendar(weeks)
