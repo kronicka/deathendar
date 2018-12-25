@@ -2,6 +2,7 @@ from datetime import date
 from dateutil.parser import parse
 from PIL import Image
 from typing import Tuple
+from pycountry import countries
 
 # TODO: scale square pics based on the number of weeks
 # TODO: merge functionality for calculating days, weeks (and, maybe, months and years)
@@ -56,6 +57,20 @@ def input_sex() -> bool:
             return False
         else:
             continue
+
+
+def input_country() -> str:
+    """
+        Input a valid country or a 2-letter country alias (e.g., "Germany" = "DE")
+    """
+    while True:
+        country = input('Enter your country (full name or 2-letter alias):\n')
+        country_names = [country.name for country in countries]
+        country_codes = [country.alpha_2 for country in countries]
+        if country.capitalize() in country_names or country.upper() in country_codes:
+            return country
+        else:
+            print('Please enter a valid country name.')
 
 
 def calculate_weeks(sex: bool, *dob: int) -> int:
