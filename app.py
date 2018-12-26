@@ -1,8 +1,8 @@
 from datetime import date
 from dateutil.parser import parse
 from PIL import Image
-from typing import Tuple
 from pycountry import countries
+from typing import Tuple
 
 # TODO: scale square pics based on the number of weeks
 # TODO: merge functionality for calculating days, weeks (and, maybe, months and years)
@@ -18,7 +18,7 @@ valid_m_sex = ['male', 'm', 'M', 'man', 'he']
 # Constants (2016 UN Data)
 general_life_expectancy_days = 26097.5
 general_life_expectancy_weeks = 3728.214        # ~71.5 years
-female_file_expectancy_weeks = 3872.18071       # ~74.261 years
+female_life_expectancy_weeks = 3872.18071       # ~74.261 years
 male_life_expectancy_weeks = 3647.54929         # ~69.953 years
 
 
@@ -78,7 +78,7 @@ def calculate_weeks(sex: bool, *dob: int) -> int:
         Calculate the number of weeks left to live based on date of birth
     """
     weeks_lived = abs(date.today() - date(*dob)).days / 7
-    weeks_left = (female_file_expectancy_weeks if sex else male_life_expectancy_weeks) - weeks_lived
+    weeks_left = (female_life_expectancy_weeks if sex else male_life_expectancy_weeks) - weeks_lived
     print(weeks_left)
 
     return int(weeks_left)
