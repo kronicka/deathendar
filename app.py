@@ -9,6 +9,7 @@ from typing import Tuple
 # TODO: do more precise calculations by being specific (e.g., ask gender and location of birth)
 # TODO: let the user pick a shape
 # TODO: separate methods into one class
+# TODO: add SVG support
 
 
 # Validators
@@ -56,7 +57,7 @@ def input_sex() -> bool:
         elif sex in valid_m_sex:
             return False
         else:
-            continue
+            print('Please enter a valid biological sex.')
 
 
 def input_country() -> str:
@@ -84,7 +85,7 @@ def calculate_weeks(sex: bool, *dob: int) -> int:
     return int(weeks_left)
 
 
-def generate_calendar(weeks: int):
+def generate_calendar(units: int, unit_type: str = None):
     """
         Generate a calendar based on the number of weeks
     """
@@ -94,7 +95,13 @@ def generate_calendar(weeks: int):
     square_size = (50, 50)
     cols = 48
     padding = 40
-    rows, leftover = divmod(weeks / cols, 1)
+
+    if unit_type == 'days':
+        square_size = (10, 10)
+        cols = 240
+        padding = 40
+
+    rows, leftover = divmod(units / cols, 1)
     rows = int(rows) + 1
 
     with Image.open(square_path) as square, Image.open(background_path) as background:
@@ -115,6 +122,7 @@ def generate_calendar(weeks: int):
 
 if __name__ == '__main__':
     dob = input_dob()
-    sex = input_sex()
-    weeks = calculate_weeks(sex, *dob)
-    generate_calendar(weeks)
+    # sex = input_sex()
+    # weeks = calculate_weeks(sex, *dob)
+    days = calculate_days(*dob)
+    generate_calendar(days, 'days')
