@@ -1,3 +1,6 @@
+# All the scraped life expectancy data belongs to The World Bank Group (http://www.worldbank.org/)
+# The code belongs to me, kronicka (https://github.com/kronicka)
+
 from datetime import date
 from dateutil.parser import parse
 from PIL import Image
@@ -11,13 +14,14 @@ from scraper import scrape_life_expectancy
 # TODO: let the user pick a shape
 # TODO: separate methods into one class
 # TODO: add SVG support
+# TODO: separate life expectancy constants in case scraping fails (or there's no internet connection)
 
 
 # Validators
 valid_f_sex = ['female', 'f', 'F', 'fem', 'she', 'woman']
 valid_m_sex = ['male', 'm', 'M', 'man', 'he']
 
-# Constants (2016 UN Data)
+# Constants (2016 WB Data)
 general_life_expectancy_days = 26097.5
 general_life_expectancy_weeks = 3728.214        # ~71.5 years
 female_life_expectancy_weeks = 3872.18071       # ~74.261 years
@@ -30,6 +34,7 @@ def calculate_days(*dob: int) -> int:
     """
     Calculate the number of days left to live based on date of birth
     NOTE: This function was a mistake, but just in case you want to know the number of days I'm leaving it in
+
     """
     days_lived = abs(date.today() - date(*dob)).days
     days_left = general_life_expectancy_days - days_lived
@@ -81,9 +86,26 @@ def input_country() -> str:
 def calculate_weeks(sex: bool, country_index: int, *dob: int) -> int:
     """
     Calculate the number of weeks left to live based on date of birth
+
+    Params:
+        sex (bool): biological sex, False for male, True for female
+        country_index (int): number of years of life expectancy by country
+        *dob (int): year, month, day of birth, in that order
+
+    Returns:
+        weeks_left (int): projected number of weeks left to live
+
     """
+    country_life_expectancy_weeks = country_index * 365 / 7 if country_index else None
+    sex_life_expectancy_weeks = female_life_expectancy_weeks if sex else male_life_expectancy_weeks
+
+    if country_life_expectancy_weeks:
+        weeks_predicted = (country_life_expectancy_weeks + sex_life_expectancy_weeks) / 2
+    else:
+        weeks_predicted = sex_life_expectancy_weeks
+
     weeks_lived = abs(date.today() - date(*dob)).days / 7
-    weeks_left = (female_life_expectancy_weeks if sex else male_life_expectancy_weeks) - weeks_lived
+    weeks_left = weeks_predicted - weeks_lived
     print(weeks_left)
 
     return int(weeks_left)
@@ -125,14 +147,11 @@ def generate_calendar(units: int, unit_type: str = None):
 
 
 if __name__ == '__main__':
-    # dob = input_dob()
-    # sex = input_sex()
-    # weeks = calculate_weeks(sex, *dob)
-    # days = calculate_days(*dob)
-    # generate_calendar(days, 'days')
+    dob = input_dob()
+    sex = input_sex()
     country = input_country()
-    country_index = scrape_life_expectancy(country)
-    print(country_index)
-    # weeks = calculate_weeks(sex, country_index, *dob)
-    # print(c)
+    country_index = int(scrape_life_expectancy(country))
+    weeks = calculate_weeks(sex, country_index, *dob)
+    generate_calendar(weeks)
+
 

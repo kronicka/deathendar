@@ -1,5 +1,7 @@
-# Scraper of the The World Bank most recent life expectancy stats
-# for when the prediction based on the country is made
+# Scraper of the The World Bank's most recent life expectancy stats
+# All the scraped life expectancy data belongs to The World Bank Group (http://www.worldbank.org/)
+# The code belongs to me, kronicka (https://github.com/kronicka)
+
 from bs4 import BeautifulSoup
 import requests
 
@@ -7,10 +9,13 @@ import requests
 def scrape_life_expectancy(country: str) -> int:
     """
     Scrape life expectancy by country from World Bank's most recent data.
+
     Params:
-        country (str): country's 3-letter alias (e.g., Afghanistan == AFG)
+        country (str): country's 3-letter alias (e.g., "Afghanistan" = "AFG")
+
     Returns:
         life_expectancy_years (int): number of years of projected life expectancy in the specified country
+
     """
     widget_url = 'https://databank.worldbank.org/data/views/reports/reportwidget.aspx'
     report_url = f'?Report_Name=CountryProfile&Id=b450fd57&tbar=y&dd=y&inf=n&zm=n&country={country}'
