@@ -3,6 +3,7 @@ from dateutil.parser import parse
 from PIL import Image
 from pycountry import countries
 from typing import Tuple
+from scraper import scrape_life_expectancy
 
 # TODO: scale square pics based on the number of weeks
 # TODO: merge functionality for calculating days, weeks (and, maybe, months and years)
@@ -77,13 +78,6 @@ def input_country() -> str:
             print('Please enter a valid country name.')
 
 
-def map_country(country: str) -> int:
-    """
-    Return the average life expectancy based on the country
-    """
-    pass
-
-
 def calculate_weeks(sex: bool, country_index: int, *dob: int) -> int:
     """
     Calculate the number of weeks left to live based on date of birth
@@ -136,6 +130,9 @@ if __name__ == '__main__':
     # weeks = calculate_weeks(sex, *dob)
     # days = calculate_days(*dob)
     # generate_calendar(days, 'days')
-    c = input_country()
-    print(c)
+    country = input_country()
+    country_index = scrape_life_expectancy(country)
+    print(country_index)
+    # weeks = calculate_weeks(sex, country_index, *dob)
+    # print(c)
 
