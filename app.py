@@ -27,8 +27,8 @@ male_life_expectancy_weeks = 3647.54929         # ~69.953 years
 # I'm leaving this stuff in until I refactor it into a more generic function/class
 def calculate_days(*dob: int) -> int:
     """
-        Calculate the number of days left to live based on date of birth
-        NOTE: This function was a mistake, but just in case you want to know the number of days I'm leaving it in
+    Calculate the number of days left to live based on date of birth
+    NOTE: This function was a mistake, but just in case you want to know the number of days I'm leaving it in
     """
     days_lived = abs(date.today() - date(*dob)).days
     days_left = general_life_expectancy_days - days_lived
@@ -39,7 +39,7 @@ def calculate_days(*dob: int) -> int:
 # Actually relevant code starts here
 def input_dob() -> Tuple[int, int, int]:
     """
-        Input and validate date of birth
+    Input and validate date of birth
     """
     dob = input('Enter your date of birth (YYYY-MM-DD):\n')
     dob = parse(dob)
@@ -48,7 +48,7 @@ def input_dob() -> Tuple[int, int, int]:
 
 def input_sex() -> bool:
     """
-        Input and validate biological sex
+    Input and validate biological sex
     """
     while True:
         sex = input('Enter your biological sex (m/f):\n')
@@ -62,7 +62,7 @@ def input_sex() -> bool:
 
 def input_country() -> str:
     """
-        Input a valid country or a 2-letter country alias (e.g., "Germany" = "DE")
+    Input a valid country or a 2-letter country alias (e.g., "Germany" = "DE")
     """
     while True:
         country = input('Enter your country (full name or 2-letter alias):\n')
@@ -74,9 +74,16 @@ def input_country() -> str:
             print('Please enter a valid country name.')
 
 
-def calculate_weeks(sex: bool, *dob: int) -> int:
+def map_country(country: str) -> int:
     """
-        Calculate the number of weeks left to live based on date of birth
+    Return the average life expectancy based on the country
+    """
+    pass
+
+
+def calculate_weeks(sex: bool, country_index: int, *dob: int) -> int:
+    """
+    Calculate the number of weeks left to live based on date of birth
     """
     weeks_lived = abs(date.today() - date(*dob)).days / 7
     weeks_left = (female_life_expectancy_weeks if sex else male_life_expectancy_weeks) - weeks_lived
@@ -87,7 +94,7 @@ def calculate_weeks(sex: bool, *dob: int) -> int:
 
 def generate_calendar(units: int, unit_type: str = None):
     """
-        Generate a calendar based on the number of weeks
+    Generate a calendar based on the number of weeks
     """
     square_path = 'img/square.jpg'
     background_path = 'img/background.png'
