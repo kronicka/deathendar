@@ -68,8 +68,11 @@ def input_country() -> str:
         country = input('Enter your country (full name or 2-letter alias):\n')
         country_names = [country.name for country in countries]
         country_codes = [country.alpha_2 for country in countries]
-        if country.capitalize() in country_names or country.upper() in country_codes:
-            return country
+
+        if country.capitalize() in country_names:
+            return countries.get(name=country.capitalize()).alpha_3
+        elif country.upper() in country_codes:
+            return countries.get(alpha_2=country.upper()).alpha_3
         else:
             print('Please enter a valid country name.')
 
@@ -128,8 +131,11 @@ def generate_calendar(units: int, unit_type: str = None):
 
 
 if __name__ == '__main__':
-    dob = input_dob()
+    # dob = input_dob()
     # sex = input_sex()
     # weeks = calculate_weeks(sex, *dob)
-    days = calculate_days(*dob)
-    generate_calendar(days, 'days')
+    # days = calculate_days(*dob)
+    # generate_calendar(days, 'days')
+    c = input_country()
+    print(c)
+
