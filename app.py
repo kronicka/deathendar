@@ -92,9 +92,10 @@ def draw_text(img: Image) -> None:
     text = 'This is your life on a single sheet of paper.'
     draw = ImageDraw.Draw(img)
     font = ImageFont.truetype('/Library/Fonts/Arial.ttf', 24)
-    padding = 100
-    draw.text(((img.size[0] / 2) - padding, img.size[1] - padding), text, (192, 192, 192), font=font)
-    img.save('img/background.png')
+    padding_left = 226        # The almost exact estimated half of pixel width of the current default tagline
+    padding_bottom = 40
+    draw.text(((img.size[0] / 2) - padding_left, img.size[1] - padding_bottom), text, (192, 192, 192), font=font)
+    # img.save('weeks.png')
 
 
 def calculate_weeks(sex: bool, country_index: int, *dob: int) -> int:
