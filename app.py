@@ -4,6 +4,8 @@
 from datetime import date
 from dateutil.parser import parse
 from PIL import Image
+from PIL import ImageFont
+from PIL import ImageDraw
 from pycountry import countries
 from typing import Tuple
 from scraper import scrape_life_expectancy
@@ -83,6 +85,18 @@ def input_country() -> str:
             print('Please enter a valid country name.')
 
 
+def draw_text(img: Image) -> None:
+    """
+    Draw a tagline on the bottom of the generated image.
+    """
+    text = 'This is your life on a single sheet of paper.'
+    draw = ImageDraw.Draw(img)
+    font = ImageFont.truetype('/Library/Fonts/Arial.ttf', 24)
+    padding = 100
+    draw.text(((img.size[0] / 2) - padding, img.size[1] - padding), text, (192, 192, 192), font=font)
+    img.save('img/background.png')
+
+
 def calculate_weeks(sex: bool, country_index: int, *dob: int) -> int:
     """
     Calculate the number of weeks left to live based on date of birth
@@ -143,6 +157,8 @@ def generate_calendar(units: int, unit_type: str = None):
                 box = (square.size[0] * col + padding, square_size[1] * row + padding)
                 background.paste(square, box)
 
+        draw_text(background)
+        # background.save('weeks.png')
         background.show()
 
 
