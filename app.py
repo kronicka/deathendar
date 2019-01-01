@@ -110,14 +110,14 @@ def draw_text(img: Image) -> None:
     # img.save('weeks.png')
 
 
-def calculate_weeks(sex: bool, country_index: int, *dob: int) -> int:
+def calculate_weeks(sex: bool, country_index: int, dob: Tuple[int, int, int]) -> int:
     """
     Calculate the number of weeks left to live based on date of birth
 
     Params:
         sex (bool): biological sex, False for male, True for female
         country_index (int): number of years of life expectancy by country
-        *dob (int): year, month, day of birth, in that order
+        dob (Tuple[int, int, int]): year, month, day of birth, in that order
 
     Returns:
         weeks_left (int): projected number of weeks left to live
