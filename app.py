@@ -85,6 +85,18 @@ def input_country() -> str:
             print('Please enter a valid country name.')
 
 
+def input_all():
+    """
+    Input all the needed arguments for the calendar.
+    """
+    dob = input_dob()
+    sex = input_sex()
+    country = input_country()
+    country_index = int(scrape_life_expectancy(country))
+
+    return sex, country_index, dob
+
+
 def draw_text(img: Image) -> None:
     """
     Draw a tagline on the bottom of the generated image.
@@ -164,11 +176,8 @@ def generate_calendar(units: int, unit_type: str = None):
 
 
 if __name__ == '__main__':
-    dob = input_dob()
-    sex = input_sex()
-    country = input_country()
-    country_index = int(scrape_life_expectancy(country))
-    weeks = calculate_weeks(sex, country_index, *dob)
+    inputs = input_all()
+    weeks = calculate_weeks(*inputs)
     generate_calendar(weeks)
 
 
