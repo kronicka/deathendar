@@ -1,6 +1,7 @@
 # All the scraped life expectancy data belongs to The World Bank Group (http://www.worldbank.org/)
 # The code belongs to me, kronicka (https://github.com/kronicka)
 
+import constants
 from datetime import date
 from dateutil.parser import parse
 from PIL import Image
@@ -23,28 +24,7 @@ from scraper import scrape_life_expectancy
 valid_f_sex = ['female', 'f', 'F', 'fem', 'she', 'woman']
 valid_m_sex = ['male', 'm', 'M', 'man', 'he']
 
-# Constants (2016 WB Data)
-general_life_expectancy_days = 26097.5
-general_life_expectancy_weeks = 3728.214        # ~71.5 years
-female_life_expectancy_weeks = 3872.18071       # ~74.261 years
-male_life_expectancy_weeks = 3647.54929         # ~69.953 years
 
-
-# Generating a calendar for days is less practical than weeks
-# I'm leaving this stuff in until I refactor it into a more generic function/class
-def calculate_days(*dob: int) -> int:
-    """
-    Calculate the number of days left to live based on date of birth
-    NOTE: This function was a mistake, but just in case you want to know the number of days I'm leaving it in
-
-    """
-    days_lived = abs(date.today() - date(*dob)).days
-    days_left = general_life_expectancy_days - days_lived
-
-    return days_left
-
-
-# Actually relevant code starts here
 def input_dob() -> Tuple[int, int, int]:
     """
     Input and validate date of birth
@@ -124,7 +104,7 @@ def calculate_weeks(sex: bool, country_index: int, dob: Tuple[int, int, int]) ->
 
     """
     country_life_expectancy_weeks = country_index * 365 / 7 if country_index else None
-    sex_life_expectancy_weeks = female_life_expectancy_weeks if sex else male_life_expectancy_weeks
+    sex_life_expectancy_weeks = constants.female_life_expectancy_weeks if sex else constants.male_life_expectancy_weeks
 
     if country_life_expectancy_weeks:
         weeks_predicted = (country_life_expectancy_weeks + sex_life_expectancy_weeks) / 2
