@@ -61,3 +61,8 @@ def store_scraped_data_in_file():
 
     with open('countries.txt', 'w') as countries_file:
         countries_file.write(json.dumps(countries_local))
+
+
+if __name__ == '__main__':
+    print('Running the scraper and storing data as a serialized dict for all countries in /countries.txt.')
+    store_scraped_data_in_file()
