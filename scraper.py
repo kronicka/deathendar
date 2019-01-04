@@ -3,7 +3,9 @@
 # The code belongs to me, kronicka (https://github.com/kronicka)
 
 from bs4 import BeautifulSoup
+from pycountry import countries
 import requests
+import json
 
 
 def scrape_life_expectancy(country: str) -> int:
@@ -30,18 +32,32 @@ def scrape_life_expectancy(country: str) -> int:
                                                 .parent \
                                                 .find_all('td')[-1] \
                                                 .find('div').get_text()
+        if life_expectancy_years == '..':
+            life_expectancy_years = 0
     except requests.exceptions.ConnectionError:
         print('Couldn\'t reach the World Bank server, pal, fix your connection for the most recent data.')
         print('Using locally stored 2016 data for countries instead.')
+        # TODO: actually use the stored data
     except requests.exceptions.RequestException as e:
         print(e)
 
-    return life_expectancy_years
+    return int(life_expectancy_years)
 
 
 def store_scraped_data_in_file():
     """
     Evoke this function to manually store the scraped data locally, for cases when there's no Internet connection.
+    Takes hella lot of time.
     The dict with key-value (country-life_expectancy) pairs will be stored in countries.txt
+
     """
-    pass
+    countries_local = {}
+    country_codes = [country.alpha_3 for country in countries]
+
+    for country in country_codes:
+        expectancy = scrape_life_expectancy(country)
+        countries_local[country] = expectancy
+        print(f'Fetched {country}: {expectancy}')
+
+    with open('countries.txt', 'w') as countries_file:
+        countries_file.write(json.dumps(countries_local))

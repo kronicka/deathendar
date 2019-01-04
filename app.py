@@ -13,11 +13,9 @@ from scraper import scrape_life_expectancy
 
 # TODO: scale square pics based on the number of weeks
 # TODO: merge functionality for calculating days, weeks (and, maybe, months and years)
-# TODO: do more precise calculations by being specific (e.g., ask gender and location of birth)
 # TODO: let the user pick a shape
 # TODO: separate methods into one class
 # TODO: add SVG support
-# TODO: separate life expectancy constants in case scraping fails (or there's no internet connection)
 
 
 # Validators
@@ -72,7 +70,7 @@ def input_all():
     dob = input_dob()
     sex = input_sex()
     country = input_country()
-    country_index = int(scrape_life_expectancy(country))
+    country_index = scrape_life_expectancy(country)
 
     return sex, country_index, dob
 
@@ -103,7 +101,7 @@ def calculate_weeks(sex: bool, country_index: int, dob: Tuple[int, int, int]) ->
         weeks_left (int): projected number of weeks left to live
 
     """
-    country_life_expectancy_weeks = country_index * 365 / 7 if country_index else None
+    country_life_expectancy_weeks = country_index * 365 / 7 if country_index and country_index != 0 else None
     sex_life_expectancy_weeks = constants.female_life_expectancy_weeks if sex else constants.male_life_expectancy_weeks
 
     if country_life_expectancy_weeks:
