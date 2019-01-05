@@ -11,7 +11,6 @@ from pycountry import countries
 from typing import Tuple
 from scraper import scrape_life_expectancy
 
-# TODO: scale square pics based on the number of weeks
 # TODO: merge functionality for calculating days, weeks (and, maybe, months and years)
 # TODO: let the user pick a shape
 # TODO: separate methods into one class

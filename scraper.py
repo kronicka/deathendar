@@ -37,7 +37,11 @@ def scrape_life_expectancy(country: str) -> int:
     except requests.exceptions.ConnectionError:
         print('Couldn\'t reach the World Bank server, pal, fix your connection for the most recent data.')
         print('Using locally stored 2016 data for countries instead.')
-        # TODO: actually use the stored data
+
+        with open('countries.txt', 'r') as countries_file:
+            countries_dict = json.loads(countries_file.read())
+            life_expectancy_years = countries_dict[country]
+            print(f'Fetched {country}: {life_expectancy_years}')
     except requests.exceptions.RequestException as e:
         print(e)
 
