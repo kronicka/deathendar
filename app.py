@@ -1,5 +1,5 @@
 # All the scraped life expectancy data belongs to The World Bank Group (http://www.worldbank.org/)
-# The code belongs to me, kronicka (https://github.com/kronicka)
+# The code is written by me, kronicka (https://github.com/kronicka) and is licensed under GNU 3.0
 
 import constants
 from datetime import date
