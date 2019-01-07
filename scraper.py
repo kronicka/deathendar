@@ -1,6 +1,6 @@
 # Scraper of the The World Bank's most recent life expectancy stats
 # All the scraped life expectancy data belongs to The World Bank Group (http://www.worldbank.org/)
-# The code is written by me, kronicka (https://github.com/kronicka) and is licensed under GNU 3.0
+# The code is written by me, kronicka (https://github.com/kronicka), and is licensed under GNU 3.0
 
 from bs4 import BeautifulSoup
 from pycountry import countries
@@ -35,13 +35,13 @@ def scrape_life_expectancy(country: str) -> int:
         if life_expectancy_years == '..':
             life_expectancy_years = 0
     except requests.exceptions.ConnectionError:
-        print('Couldn\'t reach the World Bank server, pal, fix your connection for the most recent data.')
+        print('Couldn\'t reach the World Bank server, pal. Fix your connection for the most recent data.')
         print('Using locally stored 2016 data for countries instead.')
 
         with open('countries.txt', 'r') as countries_file:
             countries_dict = json.loads(countries_file.read())
             life_expectancy_years = countries_dict[country]
-            print(f'Fetched {country}: {life_expectancy_years}')
+        print(f'Fetched {country}: {life_expectancy_years}')
     except requests.exceptions.RequestException as e:
         print(e)
 

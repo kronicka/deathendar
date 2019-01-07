@@ -1,5 +1,5 @@
 # All the scraped life expectancy data belongs to The World Bank Group (http://www.worldbank.org/)
-# The code is written by me, kronicka (https://github.com/kronicka) and is licensed under GNU 3.0
+# The code is written by me, kronicka (https://github.com/kronicka), and is licensed under GNU 3.0
 
 import constants
 from datetime import date
@@ -83,8 +83,19 @@ def draw_text(img: Image) -> None:
     font = ImageFont.truetype('/Library/Fonts/Arial.ttf', 24)
     padding_left = 226        # The almost exact estimated half of pixel width of the current default tagline
     padding_bottom = 40
-    draw.text(((img.size[0] / 2) - padding_left, img.size[1] - padding_bottom), text, (192, 192, 192), font=font)
-    # img.save('weeks.png')
+    draw.text(((img.size[0] / 2) - padding_left, img.size[1] - padding_bottom), text, constants.dark_grey, font=font)
+
+
+def draw_units_number(img: Image, units: int, unit_type: str) -> None:
+    """
+    Draw the life expectancy in specified units in the right corner of the generated image.
+    """
+    text = str(units) + ' ' + unit_type
+    draw = ImageDraw.Draw(img)
+    font = ImageFont.truetype('/Library/Fonts/Arial.ttf', 24)
+    padding_left = 170
+    padding_bottom = 40
+    draw.text((img.size[0] - padding_left, img.size[1] - padding_bottom), text, constants.dark_grey, font=font)
 
 
 def calculate_weeks(sex: bool, country_index: int, dob: Tuple[int, int, int]) -> int:
@@ -115,7 +126,7 @@ def calculate_weeks(sex: bool, country_index: int, dob: Tuple[int, int, int]) ->
     return int(weeks_left)
 
 
-def generate_calendar(units: int, unit_type: str = None):
+def generate_calendar(units: int, unit_type: str = 'weeks'):
     """
     Generate a calendar based on the number of weeks
     """
@@ -144,10 +155,11 @@ def generate_calendar(units: int, unit_type: str = None):
                 cols *= leftover
                 cols = int(cols)
             for col in range(0, cols):
-                box = (square.size[0] * col + padding, square_size[1] * row + padding)
+                box = (square.size[0] * col + padding, square_size[1] * row + padding * 2)
                 background.paste(square, box)
 
         draw_text(background)
+        draw_units_number(background, units, unit_type)
         # background.save('weeks.png')
         background.show()
 
