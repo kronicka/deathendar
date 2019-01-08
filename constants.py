@@ -1,3 +1,5 @@
+from PIL import ImageFont
+
 # Constants
 # Life Expectancy (2016 WB Data)
 general_life_expectancy_days = 26097.5
@@ -7,3 +9,4 @@ male_life_expectancy_weeks = 3647.54929         # ~69.953 years
 
 # Text Draw Utilities
 dark_grey = (192, 192, 192)
+font = ImageFont.truetype('/Library/Fonts/Arial.ttf', 24)

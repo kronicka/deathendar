@@ -5,7 +5,6 @@ import constants
 from datetime import date
 from dateutil.parser import parse
 from PIL import Image
-from PIL import ImageFont
 from PIL import ImageDraw
 from pycountry import countries
 from typing import Tuple
@@ -26,8 +25,8 @@ def input_dob() -> Tuple[int, int, int]:
     """
     Input and validate date of birth
     """
-    dob = input('Enter your date of birth (YYYY-MM-DD):\n')
-    dob = parse(dob)
+    d = input('Enter your date of birth (DD-MM-YYYY):\n')
+    dob = parse(d[4:8]+d[2:4]+d[0:2])
     return dob.year, dob.month, dob.day
 
 
@@ -80,10 +79,10 @@ def draw_text(img: Image) -> None:
     """
     text = 'This is your life on a single sheet of paper.'
     draw = ImageDraw.Draw(img)
-    font = ImageFont.truetype('/Library/Fonts/Arial.ttf', 24)
     padding_left = 226        # The almost exact estimated half of pixel width of the current default tagline
     padding_bottom = 40
-    draw.text(((img.size[0] / 2) - padding_left, img.size[1] - padding_bottom), text, constants.dark_grey, font=font)
+    draw.text(((img.size[0] / 2) - padding_left, img.size[1] - padding_bottom),
+              text, constants.dark_grey, font=constants.font)
 
 
 def draw_units_number(img: Image, units: int, unit_type: str) -> None:
@@ -92,10 +91,10 @@ def draw_units_number(img: Image, units: int, unit_type: str) -> None:
     """
     text = str(units) + ' ' + unit_type
     draw = ImageDraw.Draw(img)
-    font = ImageFont.truetype('/Library/Fonts/Arial.ttf', 24)
     padding_left = 170
     padding_bottom = 40
-    draw.text((img.size[0] - padding_left, img.size[1] - padding_bottom), text, constants.dark_grey, font=font)
+    draw.text((img.size[0] - padding_left, img.size[1] - padding_bottom),
+              text, constants.dark_grey, font=constants.font)
 
 
 def calculate_weeks(sex: bool, country_index: int, dob: Tuple[int, int, int]) -> int:
