@@ -25,8 +25,8 @@ def input_dob() -> Tuple[int, int, int]:
     """
     Input and validate date of birth
     """
-    d = input('Enter your date of birth (DD-MM-YYYY):\n')
-    dob = parse(d[4:8]+d[2:4]+d[0:2])
+    dob = input('Enter your date of birth (YYYY-MM-DD):\n')
+    dob = parse(dob)
     return dob.year, dob.month, dob.day
 
 
