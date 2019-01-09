@@ -10,7 +10,7 @@ male_life_expectancy_weeks = 3647.54929         # ~69.953 years
 
 # Text Draw Utilities
 dark_grey = (192, 192, 192)
-linux_font_path = '/Library/Fonts/Arial.ttf'
+macos_font_path = '/Library/Fonts/Arial.ttf'
 windows_font_path = 'arial.ttf'
-path = windows_font_path if system() == 'Windows' else linux_font_path
+path = windows_font_path if system() == 'Windows' else macos_font_path
 font = ImageFont.truetype(path, 24)
