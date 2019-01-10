@@ -1,6 +1,6 @@
 from dateutil.parser import parse
 from pycountry import countries
-from scraper import scrape_life_expectancy
+from utils.scraper import scrape_life_expectancy
 from typing import Tuple
 
 

@@ -1,7 +1,7 @@
 # All the scraped life expectancy data belongs to The World Bank Group (http://www.worldbank.org/)
 # The code is written by me, kronicka (https://github.com/kronicka), and is licensed under GNU 3.0
 
-import constants
+from utils import constants
 from datetime import date
 from PIL import Image
 from typing import Tuple

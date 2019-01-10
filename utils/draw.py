@@ -1,4 +1,4 @@
-import constants
+from utils import constants
 from PIL import Image
 from PIL import ImageDraw
 
