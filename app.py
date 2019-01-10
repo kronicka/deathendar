@@ -3,98 +3,15 @@
 
 import constants
 from datetime import date
-from dateutil.parser import parse
 from PIL import Image
-from PIL import ImageDraw
-from pycountry import countries
 from typing import Tuple
-from scraper import scrape_life_expectancy
+from utils.input import input_all
+from utils.draw import draw_text, draw_units_number
 
 # TODO: merge functionality for calculating days, weeks (and, maybe, months and years)
 # TODO: let the user pick a shape
 # TODO: separate methods into one class
 # TODO: add SVG support
-
-
-# Validators
-valid_f_sex = ['female', 'f', 'F', 'fem', 'she', 'woman']
-valid_m_sex = ['male', 'm', 'M', 'man', 'he']
-
-
-def input_dob() -> Tuple[int, int, int]:
-    """
-    Input and validate date of birth
-    """
-    dob = input('Enter your date of birth (YYYY-MM-DD):\n')
-    dob = parse(dob)
-    return dob.year, dob.month, dob.day
-
-
-def input_sex() -> bool:
-    """
-    Input and validate biological sex
-    """
-    while True:
-        sex = input('Enter your biological sex (m/f):\n')
-        if sex in valid_f_sex:
-            return True
-        elif sex in valid_m_sex:
-            return False
-        else:
-            print('Please enter a valid biological sex.')
-
-
-def input_country() -> str:
-    """
-    Input a valid country or a 2-letter country alias (e.g., "Germany" = "DE")
-    """
-    while True:
-        country = input('Enter your country (full name or 2-letter alias):\n')
-        country_names = [country.name for country in countries]
-        country_codes = [country.alpha_2 for country in countries]
-
-        if country.capitalize() in country_names:
-            return countries.get(name=country.capitalize()).alpha_3
-        elif country.upper() in country_codes:
-            return countries.get(alpha_2=country.upper()).alpha_3
-        else:
-            print('Please enter a valid country name.')
-
-
-def input_all():
-    """
-    Input all the needed arguments for the calendar.
-    """
-    dob = input_dob()
-    sex = input_sex()
-    country = input_country()
-    country_index = scrape_life_expectancy(country)
-
-    return sex, country_index, dob
-
-
-def draw_text(img: Image) -> None:
-    """
-    Draw a tagline on the bottom of the generated image.
-    """
-    text = 'This is your life on a single sheet of paper.'
-    draw = ImageDraw.Draw(img)
-    padding_left = 226        # The almost exact estimated half of pixel width of the current default tagline
-    padding_bottom = 40
-    draw.text(((img.size[0] / 2) - padding_left, img.size[1] - padding_bottom),
-              text, constants.dark_grey, font=constants.font)
-
-
-def draw_units_number(img: Image, units: int, unit_type: str) -> None:
-    """
-    Draw the life expectancy in specified units in the right corner of the generated image.
-    """
-    text = str(units) + ' ' + unit_type
-    draw = ImageDraw.Draw(img)
-    padding_left = 170
-    padding_bottom = 40
-    draw.text((img.size[0] - padding_left, img.size[1] - padding_bottom),
-              text, constants.dark_grey, font=constants.font)
 
 
 def calculate_weeks(sex: bool, country_index: int, dob: Tuple[int, int, int]) -> int:
@@ -159,7 +76,7 @@ def generate_calendar(units: int, unit_type: str = 'weeks'):
 
         draw_text(background)
         draw_units_number(background, units, unit_type)
-        # background.save('weeks.png')
+        background.save('weeks.png')
         background.show()
 
 
@@ -167,5 +84,4 @@ if __name__ == '__main__':
     inputs = input_all()
     weeks = calculate_weeks(*inputs)
     generate_calendar(weeks)
-
 
