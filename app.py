@@ -8,6 +8,7 @@ from typing import Tuple
 from utils.input import input_all
 from utils.draw import draw_text, draw_units_number
 
+
 # TODO: merge functionality for calculating days, weeks (and, maybe, months and years)
 # TODO: let the user pick a shape
 # TODO: separate methods into one class
@@ -46,9 +47,6 @@ def generate_calendar(units: int, unit_type: str = 'weeks'):
     """
     Generate a calendar based on the number of weeks
     """
-    square_path = 'img/square.jpg'
-    background_path = 'img/background.png'
-
     square_size = (50, 50)
     cols = 48
     padding = 40
@@ -61,7 +59,7 @@ def generate_calendar(units: int, unit_type: str = 'weeks'):
     rows, leftover = divmod(units / cols, 1)
     rows = int(rows) + 1
 
-    with Image.open(square_path) as square, Image.open(background_path) as background:
+    with Image.open(constants.square_path) as square, Image.open(constants.background_path) as background:
         print(background.format, background.size, background.mode)
         print(square.format, square.size)
         square = square.resize(square_size)
