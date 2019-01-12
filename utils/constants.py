@@ -3,18 +3,26 @@ from platform import system
 
 # Constants
 # Life Expectancy (2016 WB Data)
-general_life_expectancy_days = 26097.5
-general_life_expectancy_weeks = 3728.214        # ~71.5 years
-female_life_expectancy_weeks = 3872.18071       # ~74.261 years
-male_life_expectancy_weeks = 3647.54929         # ~69.953 years
+GENERAL_LIFE_EXPECTANCY_DAYS = 26097.5
+GENERAL_LIFE_EXPECTANCY_WEEKS = 3728.214        # ~71.5 years
+FEMALE_LIFE_EXPECTANCY_WEEKS = 3872.18071       # ~74.261 years
+MALE_LIFE_EXPECTANCY_WEEKS = 3647.54929         # ~69.953 years
 
 # Image Paths
-square_path = 'img/square.jpg'
-background_path = 'img/background.png'
+SQUARE_PATH = 'img/square.jpg'
+BACKGROUND_PATH = 'img/background.png'
 
 # Text Draw Utilities
-dark_grey = (192, 192, 192)
-macos_font_path = '/Library/Fonts/Arial.ttf'
-windows_font_path = 'arial.ttf'
-path = windows_font_path if system() == 'Windows' else macos_font_path
-font = ImageFont.truetype(path, 24)
+DARK_GREY = (192, 192, 192)
+MACOS_FONT_PATH = '/Library/Fonts/Arial.ttf'
+WINDOWS_FONT_PATH = 'arial.ttf'
+PATH = WINDOWS_FONT_PATH if system() == 'Windows' else MACOS_FONT_PATH
+FONT = ImageFont.truetype(PATH, 24)
+
+# SVG calendar generation constants
+CAL_WIDTH = '420mm'
+CAL_HEIGHT = '594mm'
+CAL_SIZE = (CAL_WIDTH, CAL_HEIGHT)
+CSS_STYLES = """
+    .square { fill: white; stroke: black; stroke-width: .1mm; padding: .2mm; }
+"""

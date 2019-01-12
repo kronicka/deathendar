@@ -12,7 +12,7 @@ def draw_text(img: Image) -> None:
     padding_left = 226        # The almost exact estimated half of pixel width of the current default tagline
     padding_bottom = 40
     draw.text(((img.size[0] / 2) - padding_left, img.size[1] - padding_bottom),
-              text, constants.dark_grey, font=constants.font)
+              text, constants.DARK_GREY, font=constants.FONT)
 
 
 def draw_units_number(img: Image, units: int, unit_type: str) -> None:
@@ -24,4 +24,4 @@ def draw_units_number(img: Image, units: int, unit_type: str) -> None:
     padding_left = 170
     padding_bottom = 40
     draw.text((img.size[0] - padding_left, img.size[1] - padding_bottom),
-              text, constants.dark_grey, font=constants.font)
+              text, constants.DARK_GREY, font=constants.FONT)
