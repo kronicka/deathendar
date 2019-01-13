@@ -1,5 +1,5 @@
 import svgwrite
-from utils.constants import CAL_SIZE, CSS_STYLES
+from constants import CAL_SIZE, CSS_STYLES
 
 
 def generate_calendar_svg(units: int, unit_type: str = 'weeks'):
@@ -18,6 +18,7 @@ def generate_calendar_svg(units: int, unit_type: str = 'weeks'):
 
     square_size = (8, 8)
     cols = 40
+    padding = 10
 
     if unit_type == 'days':
         square_size = (1, 1)
@@ -31,8 +32,8 @@ def generate_calendar_svg(units: int, unit_type: str = 'weeks'):
             cols *= leftover
             cols = int(cols)
         for col in range(0, cols):
-            xc = col * 10 + 1
-            yc = row * 10 + 1
+            xc = col * 10 + padding
+            yc = row * 10 + padding
             square = dwg.rect(insert=(xc, yc), size=square_size)
             squares.add(square)
 
