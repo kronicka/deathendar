@@ -29,7 +29,7 @@ def calculate_weeks(sex: bool, country_index: int, dob: Tuple[int, int, int]) ->
 
     """
     country_life_expectancy_weeks = country_index * 365 / 7 if country_index and country_index != 0 else None
-    sex_life_expectancy_weeks = constants.female_life_expectancy_weeks if sex else constants.male_life_expectancy_weeks
+    sex_life_expectancy_weeks = constants.FEMALE_LIFE_EXPECTANCY_WEEKS if sex else constants.MALE_LIFE_EXPECTANCY_WEEKS
 
     if country_life_expectancy_weeks:
         weeks_predicted = (country_life_expectancy_weeks + sex_life_expectancy_weeks) / 2
@@ -59,7 +59,7 @@ def generate_calendar(units: int, unit_type: str = 'weeks'):
     rows, leftover = divmod(units / cols, 1)
     rows = int(rows) + 1
 
-    with Image.open(constants.square_path) as square, Image.open(constants.background_path) as background:
+    with Image.open(constants.SQUARE_PATH) as square, Image.open(constants.BACKGROUND_PATH) as background:
         print(background.format, background.size, background.mode)
         print(square.format, square.size)
         square = square.resize(square_size)
@@ -74,7 +74,7 @@ def generate_calendar(units: int, unit_type: str = 'weeks'):
 
         draw_text(background)
         draw_units_number(background, units, unit_type)
-        background.save('weeks.png')
+        background.save('calendar.png')
         background.show()
 
 
