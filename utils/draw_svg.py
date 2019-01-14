@@ -37,6 +37,8 @@ def generate_calendar_svg(units: int, unit_type: str = 'weeks'):
             square = dwg.rect(insert=(xc, yc), size=square_size)
             squares.add(square)
 
+    tagline = 'This is your life on a single sheet of paper.'
+    dwg.add(dwg.text(tagline, insert=(180, 580), font_size="5px", fill='grey'))
     dwg.save()
 
 
