@@ -24,5 +24,5 @@ CAL_WIDTH = '420mm'
 CAL_HEIGHT = '594mm'
 CAL_SIZE = (CAL_WIDTH, CAL_HEIGHT)
 CSS_STYLES = """
-    .square { fill: white; stroke: black; stroke-width: .1mm; padding: .2mm; }
+    .square { fill: white; stroke: black; stroke-width: .1mm; padding: .1mm; }
 """

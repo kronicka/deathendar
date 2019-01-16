@@ -7,6 +7,7 @@ from PIL import Image
 from typing import Tuple
 from utils.input import input_all
 from utils.draw import draw_text, draw_units_number
+from utils.draw_svg import generate_calendar_svg
 
 
 # TODO: merge functionality for calculating days, weeks (and, maybe, months and years)
@@ -81,5 +82,6 @@ def generate_calendar(units: int, unit_type: str = 'weeks'):
 if __name__ == '__main__':
     inputs = input_all()
     weeks = calculate_weeks(*inputs)
-    generate_calendar(weeks)
+    # generate_calendar(weeks)
+    generate_calendar_svg(weeks)
 
