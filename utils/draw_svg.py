@@ -38,8 +38,9 @@ def generate_calendar_svg(units: int, unit_type: str = 'weeks'):
             squares.add(square)
 
     tagline = 'This is your life on a single sheet of paper.'
+    units_label = f'{units} wks / {float("%.3g" % (units * 7 / 365))} yrs'
     dwg.add(dwg.text(tagline, insert=(180, 580), font_size='5px', fill='grey'))
-    dwg.add(dwg.text(units, insert=(380, 580), font_size='5px', fill='grey'))
+    dwg.add(dwg.text(units_label, insert=(360, 580), font_size='5px', fill='grey'))
     dwg.save()
 
 
