@@ -33,7 +33,7 @@ def generate_calendar_svg(units: int, unit_type: str = 'weeks'):
             cols = int(cols)
         for col in range(0, cols):
             xc = col * 8 + padding
-            yc = row * 8 + padding
+            yc = row * 8 + padding * 2
             square = dwg.rect(insert=(xc, yc), size=square_size)
             squares.add(square)
 

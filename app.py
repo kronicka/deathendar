@@ -3,17 +3,14 @@
 
 from utils import constants
 from datetime import date
-from PIL import Image
 from typing import Tuple
 from utils.input import input_all
-from utils.draw import draw_text, draw_units_number
-from utils.draw_svg import generate_calendar_svg
+from utils.calendar import generate_calendar_svg
 
 
 # TODO: merge functionality for calculating days, weeks (and, maybe, months and years)
 # TODO: let the user pick a shape
 # TODO: separate methods into one class
-# TODO: add SVG support
 
 
 def calculate_weeks(sex: bool, country_index: int, dob: Tuple[int, int, int]) -> int:
@@ -44,44 +41,8 @@ def calculate_weeks(sex: bool, country_index: int, dob: Tuple[int, int, int]) ->
     return int(weeks_left)
 
 
-def generate_calendar(units: int, unit_type: str = 'weeks'):
-    """
-    Generate a calendar based on the number of weeks
-    """
-    square_size = (50, 50)
-    cols = 48
-    padding = 40
-
-    if unit_type == 'days':
-        square_size = (10, 10)
-        cols = 240
-        padding = 40
-
-    rows, leftover = divmod(units / cols, 1)
-    rows = int(rows) + 1
-
-    with Image.open(constants.SQUARE_PATH) as square, Image.open(constants.BACKGROUND_PATH) as background:
-        print(background.format, background.size, background.mode)
-        print(square.format, square.size)
-        square = square.resize(square_size)
-
-        for row in range(0, rows):
-            if row == rows - 1 and leftover != 0:
-                cols *= leftover
-                cols = int(cols)
-            for col in range(0, cols):
-                box = (square.size[0] * col + padding, square_size[1] * row + padding * 2)
-                background.paste(square, box)
-
-        draw_text(background)
-        draw_units_number(background, units, unit_type)
-        background.save('calendar.png')
-        background.show()
-
-
 if __name__ == '__main__':
     inputs = input_all()
     weeks = calculate_weeks(*inputs)
-    # generate_calendar(weeks)
     generate_calendar_svg(weeks)
 
