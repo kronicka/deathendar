@@ -4,3 +4,4 @@ python-dateutil
 pycountry>=18.12.8
 requests
 svgwrite
+wand

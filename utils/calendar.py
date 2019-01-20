@@ -1,8 +1,9 @@
 import svgwrite
+from wand.image import Image
 from utils.constants import CAL_SIZE, CSS_STYLES
 
 
-def generate_calendar_svg(units: int, unit_type: str = 'weeks'):
+def generate_calendar_svg(units: int, file_format: str, unit_type: str = 'weeks'):
     """
     Generate an svg calendar based on the number of weeks
     """
@@ -43,6 +44,14 @@ def generate_calendar_svg(units: int, unit_type: str = 'weeks'):
     dwg.add(dwg.text(units_label, insert=(360, 580), font_size='5px', fill='grey'))
     dwg.save()
 
+    svg_file = open('calendar.svg', mode='wb')
+    with Image(blob=svg_file.read(), format="svg") as image:
+        png_image = image.make_blob("png")
+    svg_file.close()
+
+    with open('calendar.png', mode='wb') as png_out:
+        png_out.write(png_image)
+
 
 if __name__ == '__main__':
-    generate_calendar_svg(100)
+    generate_calendar_svg(100, 'png')
