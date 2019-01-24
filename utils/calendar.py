@@ -3,7 +3,7 @@ from wand.image import Image
 from utils.constants import CAL_SIZE, CSS_STYLES
 
 
-def generate_calendar_svg(units: int, file_format: str, unit_type: str = 'weeks'):
+def generate_calendar_svg(units: int, file_format: str):
     """
     Generate an svg calendar based on the number of weeks
     """
@@ -20,10 +20,6 @@ def generate_calendar_svg(units: int, file_format: str, unit_type: str = 'weeks'
     square_size = (5, 5)
     cols = 50
     padding = 11
-
-    if unit_type == 'days':
-        square_size = (1, 1)
-        cols = 240
 
     rows, leftover = divmod(units / cols, 1)
     rows = int(rows) + 1
