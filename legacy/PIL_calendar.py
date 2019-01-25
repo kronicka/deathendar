@@ -1,6 +1,6 @@
 from utils import constants
 from PIL import Image
-from utils.draw import draw_text, draw_units_number
+from legacy.draw import draw_text, draw_units_number
 
 
 def generate_calendar(units: int, unit_type: str = 'weeks'):

@@ -44,5 +44,5 @@ def calculate_weeks(sex: bool, country_index: int, dob: Tuple[int, int, int]) ->
 if __name__ == '__main__':
     inputs = input_all()
     weeks = calculate_weeks(*inputs)
-    generate_calendar_svg(weeks, 'png')
+    generate_calendar_svg(weeks, 'svg')
 

@@ -3,6 +3,10 @@ from wand.image import Image
 from utils.constants import CAL_SIZE, CSS_STYLES
 
 
+def draw_label():
+    pass
+
+
 def generate_calendar_svg(units: int, file_format: str):
     """
     Generate an svg calendar based on the number of weeks
