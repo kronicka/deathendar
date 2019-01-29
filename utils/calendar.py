@@ -3,8 +3,14 @@ from wand.image import Image
 from utils.constants import CAL_SIZE, CSS_STYLES
 
 
-def draw_label():
-    pass
+def draw_label(num_of_labels: int, dwg):
+    """
+    Draw units label for each starting week in a row.
+    """
+    x = 10
+    y = 10
+    for label in range(num_of_labels):
+        dwg.add(dwg.text(label, insert=(x, y * label), font_size='2px', fill='grey'))
 
 
 def generate_calendar_svg(units: int, file_format: str):
@@ -37,6 +43,8 @@ def generate_calendar_svg(units: int, file_format: str):
             yc = row * 8 + padding * 2
             square = dwg.rect(insert=(xc, yc), size=square_size)
             squares.add(square)
+
+    # draw_label(rows, dwg)
 
     tagline = 'This is your life on a single sheet of paper.'
     units_label = f'{units} wks / {float("%.3g" % (units * 7 / 365))} yrs'

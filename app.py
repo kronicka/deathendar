@@ -11,6 +11,7 @@ from utils.calendar import generate_calendar_svg
 # TODO: merge functionality for calculating days, weeks (and, maybe, months and years)
 # TODO: let the user pick a shape
 # TODO: separate methods into one class
+# TODO: add labels for weeks
 
 
 def calculate_weeks(sex: bool, country_index: int, dob: Tuple[int, int, int]) -> int:
